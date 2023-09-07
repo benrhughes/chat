@@ -21,7 +21,7 @@ async function execute() {
     }
 
     // run tsc
-    await exec("tsc");
+    await exec("./node_modules/typescript/bin/tsc");
 
     // copy resources to target
     for (const file of resources) {
