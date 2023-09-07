@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  </style>
+  <link rel="stylesheet" href="./app.css">
+  <link rel="stylesheet" href="./primeflex.css">
+  <link rel="stylesheet" href="./primeone-light.css">
+
+</head>
+
+<body class="surface-900 text-white m-0 h-screen">
+  <div class="text-white text-center p-2 flex flex-row">
+    <div id="chatTitle" class="text-2xl">Chat</div>
+    <div class="flex-grow-1 text-right align-self-center">
+      <a id="settingsToggle" class="text-white" href="" name="settings">
+        <img src="cog.png" class="w-2rem h-2rem" >
+      </a>
+    </div>
+  </div>
+
+  <div id="settings" class="hidden justify-content-center bg-bluegray-700 p-2 pb-4">
+    <div class="" style="max-width: 50rem;">
+      <p class="font-bold text-xl">Global Settings</p>
+      <div class="formgrid grid">
+        <div class="field col-12">
+          <label for="chatSelect">Load saved chat:</label>
+          <select id="chatSelect"
+            class="w-11 text-base text-color surface-overlay py-2 border-1 border-solid surface-border border-round outline-none focus:border-primary">
+            <option value="">--</option>
+            <option value="new">Create new chat...</option>
+          </select>
+        </div>
+        <div class="field col-12">
+          <label for="apiKey">API Key:</label>
+          <input id="apiKey" type="text"
+            class="w-11 text-base text-color surface-overlay py-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+        </div>
+        <div class="field col-12">
+          <label for="contextWindow">Number of messages to send as context:</label>
+          <input id="contextWindow" type="number"
+            class="w-11 text-base text-color surface-overlay py-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+        </div>
+      </div>
+      <button id="saveSettings">Save Settings</button>
+      <button id="export">Export All Data</button>
+      <button id="import">Import and Override All Data</button>
+      <button id="clearPersistance">Clear All Data</button>
+      <p class="font-bold text-xl pt-4">Chat Settings</p>
+      <div class="formgrid grid">
+        <div class="field col-12">
+          <label for="chatName">Chat name:</label>
+          <input id="chatName" type="text"
+            class="w-11 text-base text-color surface-overlay py-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary ">
+        </div>
+        <div class="field col-12">
+          <label for="modelSelect">GPT Model:</label>
+          <select id="modelSelect"
+            class="w-11 text-base text-color surface-overlay py-2 border-1 border-solid surface-border border-round outline-none focus:border-primary">
+            <option value="gpt-4">GPT-4</option>
+            <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+          </select>
+        </div>
+        <div class="field col-12">
+          <label for="systemMessage">System prompt:</label>
+          <textarea id="systemMessage"
+            class="w-11 h-10rem text-base text-color surface-overlay py-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">You are a helpful assistant.</textarea>
+        </div>
+      </div>
+      <button id="clearMessages">Clear Message History</button>
+      <button id="deleteChat">Delete Chat</button>
+    </div>
+  </div>
+
+  <div class="p-2">
+    <div class="flex justify-content-center">
+      <div id="" class="w-12" style="max-width: 50rem;">
+        <div class="flex w-12 h-3rem">
+          <textarea id="promptInput"
+            class="flex-grow-1 text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary"></textarea>
+        </div>
+        <div id="historyList"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./loader.js"></script>
+
+</body>
+
+</html>
