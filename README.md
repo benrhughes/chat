@@ -4,10 +4,6 @@ A simple, completely client-side UI for ChatGPT. All configuration and chat hist
 
 ![Alt text](readme/chat.png)
 
-## Setings
-
-![Alt text](readme/settings.png)
-
 ## Live Deno
 https://benrhughes.github.io/chat/
 
