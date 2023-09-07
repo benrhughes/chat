@@ -2,9 +2,13 @@
 
 A simple, completely client-side UI for ChatGPT. All configuration and chat history is stord in the browser's local storage. 
 
+<center>
+
 ![Alt text](readme/chat.png)
 
-## Live Deno
+</center>
+
+## Live Demo
 https://benrhughes.github.io/chat/
 
 ## Build
