@@ -13,6 +13,6 @@ npm install
 npm run build
 ```
 
-Serve the contents of the `dist` folder
+Serve the contents of the `dist` folder, or you can simply download the contends of the [gh-pages](https://github.com/benrhughes/chat/tree/gh-pages) branch.
 
 
