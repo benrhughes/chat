@@ -155,6 +155,7 @@ export class App {
         this.db.global.apiKey = Elements.apiKey.value;
         this.db.global.contextWindow = +Elements.contextWindow.value;
         this.saveDb();
+        alert("Settings saved");
     }
     bindUi() {
         Elements.saveSettingsBtn.addEventListener("click", () => __awaiter(this, void 0, void 0, function* () {
