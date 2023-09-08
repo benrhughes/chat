@@ -10,6 +10,10 @@
     "typescript": "^5.2.2"
   },
   "scripts": {
-    "build": "node build.js"
+    "build": "node build.js",
+    "watch": "nodemon --watch 'app/**/*.*' --exec 'npm run build'"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }

@@ -163,6 +163,7 @@ export class App {
         this.db.global.apiKey = Elements.apiKey.value;
         this.db.global.contextWindow = +Elements.contextWindow.value;
         this.saveDb();
+        alert("Settings saved");
     }
 
     bindUi() {

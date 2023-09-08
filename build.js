@@ -1,9 +1,9 @@
 const dest = 'dist';
 
 const resources = [
-    './index.html',
-    './cog.png',
-    './app.css',
+    './app/index.html',
+    './app/cog.png',
+    './app/app.css',
     './node_modules/primeflex/primeflex.css',
     './node_modules/primeflex/themes/primeone-light.css'
 ]

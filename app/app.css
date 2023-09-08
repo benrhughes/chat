@@ -1,3 +1,7 @@
 .w-content {
     width: fit-content;
 }
+
+button {
+    padding: 1rem;
+}

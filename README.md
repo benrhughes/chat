@@ -6,6 +6,7 @@ A simple, completely client-side UI for ChatGPT. All configuration and chat hist
 
 ![Alt text](readme/chat.png)
 
+![Alt text](readme/settings.png)
 </center>
 
 ## Live Demo
