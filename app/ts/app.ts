@@ -134,6 +134,7 @@ export class App {
     }
 
     deleteChat() {
+        confirm("Delete the current chat?");
         this.db.models = this.db.models.filter(x => x.id !== this.currentChat?.model.id);
         this.currentChat = new ChatVm(this.db.models[0]);
         this.saveDb();

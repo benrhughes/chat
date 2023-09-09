@@ -99,6 +99,7 @@ export class ChatVm{
 
 
     clearMessages() {
+        confirm("Delete all messages for this chat?")
         this.model.messages = [];
         this.updateUiFromModel();
     }
