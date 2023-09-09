@@ -10,7 +10,7 @@ A simple, completely client-side UI for ChatGPT. All configuration and chat hist
 </center>
 
 ## Live Demo
-https://benrhughes.github.io/chat/
+https://benrhughes.github.io/chat-demo/
 
 ## Build
 ```
