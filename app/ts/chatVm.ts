@@ -35,7 +35,10 @@ export class ChatVm{
             message = new ChatMessage('assistant', assistantMessage);
             this.updateHistory(message);
         } else {
-            console.error('Failed to call GPT-4 API');
+            const text = `An error occurred calling the ChatGPT API.\n${response.status}: ${response.statusText}\n${response.body}`;
+            console.error(text);
+            message = new ChatMessage('assistant', text);
+            this.addMessageToUi(message);
         }
     }
 
