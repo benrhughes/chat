@@ -43,6 +43,7 @@ export class App {
 
     saveDb(): void {
         if (this.currentChat) {
+            this.currentChat.updateModelFromUi();
             this.currentChat.model.lastSaved = new Date();
         }
 
