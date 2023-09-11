@@ -10,7 +10,6 @@ export class ChatVm{
         this.updateModelFromUi();
 
         let message = new ChatMessage('user', Elements.prompt.value);
-        
         this.updateHistory(message);
 
         const tmpMsg = this.addMessageToUi(new ChatMessage("assistant", "..."));
@@ -23,6 +22,7 @@ export class ChatVm{
             },
             body: JSON.stringify({
                 model: this.model.gptModel,
+                temperature: global.temperature,
                 messages: [{ role: 'system', content: this.model.systemPrompt }, ...this.model.messages.slice(-global.contextWindow)] 
             })
         });

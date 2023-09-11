@@ -6,6 +6,7 @@ export class DB {
 export class GlobalModel {
     apiKey: string = '';
     contextWindow: number = 10;
+    temperature: number = 0.8;
 }
 
 export class ChatModel {

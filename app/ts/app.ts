@@ -1,11 +1,13 @@
 import { ChatVm } from "./chatVm.js";
 import { Elements } from "./elements.js";
+import { GlobalsVm } from "./globalsVm.js";
 import { ChatModel, DB, DB as Database } from "./models.js";
 
 export class App {
     localStorageKey = "chat-db";
     db: Database = new Database();
     currentChat: ChatVm | undefined;
+    globals: GlobalsVm | undefined;
 
     constructor() {
         this.load();
@@ -14,8 +16,8 @@ export class App {
     load() {
         this.loadDb();
 
-        Elements.apiKey.value = this.db.global.apiKey;
-        Elements.contextWindow.value = this.db.global.contextWindow?.toString() || "10";
+        this.globals = new GlobalsVm(this.db.global);
+        this.globals.updateUiFromModel();
 
         for (const chat of this.db.models) {
             this.addChatOptionToUi(chat);
@@ -152,18 +154,17 @@ export class App {
     }
 
     async sendMessage() {
-        if (!this.db.global.apiKey) {
+        if (!this.globals?.model.apiKey) {
             alert('You need to enter an API Key');
             return;
         }
 
-        await this.currentChat?.sendMessage(this.db.global);
+        await this.currentChat?.sendMessage(this.globals.model);
         this.saveDb();
     }
 
     saveSettings() {
-        this.db.global.apiKey = Elements.apiKey.value;
-        this.db.global.contextWindow = +Elements.contextWindow.value;
+        this.globals?.updateModelFromUi();
         this.saveDb();
         alert("Settings saved");
     }
