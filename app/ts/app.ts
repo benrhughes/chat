@@ -33,7 +33,9 @@ export class App {
 
         this.currentChat = new ChatVm(chat);
 
-        this.bindUi();
+        Elements.selectedChat.value = chat.id.toString();
+
+        this.bindUiEventHandlers();
     }
 
     loadDb() {
@@ -169,7 +171,7 @@ export class App {
         alert("Settings saved");
     }
 
-    bindUi() {
+    bindUiEventHandlers() {
         Elements.saveSettingsBtn.addEventListener("click", async () => {
             this.saveSettings();
         });
