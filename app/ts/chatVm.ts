@@ -22,8 +22,8 @@ export class ChatVm{
             },
             body: JSON.stringify({
                 model: this.model.gptModel,
-                temperature: global.temperature,
-                messages: [{ role: 'system', content: this.model.systemPrompt }, ...this.model.messages.slice(-global.contextWindow)] 
+                temperature: this.model.temperature,
+                messages: [{ role: 'system', content: this.model.systemPrompt }, ...this.model.messages.slice(-this.model.contextWindow)] 
             })
         });
 
@@ -47,6 +47,8 @@ export class ChatVm{
         Elements.gptModel.value = this.model.gptModel;
         Elements.chatName.value = this.model.name || 'New Chat';
         Elements.chatTitle.innerHTML = this.model.name;
+        Elements.contextWindow.value = this.model.contextWindow?.toString() || "10";
+        Elements.temperature.value = this.model.temperature?.toString() || "0.8";
 
         this.clearHistoryUi();
         this.model.messages.forEach(element => {
@@ -58,6 +60,8 @@ export class ChatVm{
         this.model.systemPrompt = Elements.systemMessage.value;
         this.model.gptModel = Elements.gptModel.value; 
         this.model.name = Elements.chatName.value;
+        this.model.contextWindow = +Elements.contextWindow.value;
+        this.model.temperature = +Elements.temperature.value;
     }
 
     addMessageToUi(message: ChatMessage) {

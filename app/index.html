@@ -43,16 +43,6 @@
           <input id="apiKey" type="text"
             class="w-11 text-base text-color surface-overlay py-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
         </div>
-        <div class="field col-12">
-          <label for="contextWindow">Number of messages to send as context:</label>
-          <input id="contextWindow" type="number"
-            class="w-11 text-base text-color surface-overlay py-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-        </div>
-        <div class="field col-12">
-          <label for="temperature">Temperature (0-2):</label>
-          <input id="temperature" type="number" step="0.1" min="0" max="2"
-            class="w-11 text-base text-color surface-overlay py-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-        </div>
       </div>
       <button id="saveSettings">Save Settings</button>
       <button id="export">Export All Data</button>
@@ -72,6 +62,16 @@
             <option value="gpt-4">GPT-4</option>
             <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
           </select>
+        </div>
+        <div class="field col-12">
+          <label for="contextWindow">Number of messages to send as context:</label>
+          <input id="contextWindow" type="number"
+            class="w-11 text-base text-color surface-overlay py-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+        </div>
+        <div class="field col-12">
+          <label for="temperature">Temperature (0-2):</label>
+          <input id="temperature" type="number" step="0.1" min="0" max="2"
+            class="w-11 text-base text-color surface-overlay py-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
         </div>
         <div class="field col-12">
           <label for="systemMessage">System prompt:</label>
