@@ -13,6 +13,9 @@ A simple, completely client-side web UI for ChatGPT. All configuration and chat 
 https://benrhughes.github.io/chat-demo/
 
 ## Build
+You can clone the [demo repo](https://github.com/benrhughes/chat-demo) if you want the latest built version. 
+
+If you'd like to build it yourself:
 ```
 git clone https://github.com/benrhughes/chat.git
 cd chat
@@ -20,6 +23,8 @@ npm install
 npm run build
 ```
 
-Serve the contents of the `dist` folder, or you can simply download the [demo](https://benrhughes.github.io/chat-demo/).
+Serve the contents of the `dist` folder.
+
+
 
 
