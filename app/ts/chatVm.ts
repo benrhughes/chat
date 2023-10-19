@@ -104,7 +104,6 @@ export class ChatVm{
         }
     }
 
-
     clearMessages() {
         confirm("Delete all messages for this chat?")
         this.model.messages = [];
@@ -114,5 +113,33 @@ export class ChatVm{
     updateHistory(message: ChatMessage) {
         this.model.messages.push(message);
         this.addMessageToUi(message);
+    }
+    
+    async summarizeHistory(global: GlobalModel){
+        const toSummarize = this.model.messages.slice(0, this.model.messages.length - this.model.contextWindow);
+        const json = JSON.stringify(toSummarize);
+        const msg = {
+            role: 'user',
+            content: `As concisely as possible, summarize this conversation between a user and chatgpt. It will be used as context for future chats.\r\n${json}`
+        };
+        
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${global.apiKey}`
+            },
+            body: JSON.stringify({
+                model: this.model.gptModel,
+                temperature: this.model.temperature,
+                messages: [msg]
+            })
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            const assistantMessage = data.choices[0]?.message.content ?? 'No output';
+            console.log(assistantMessage);
+        }
     }
 }

@@ -196,6 +196,16 @@ export class App {
             this.currentChat?.clearMessages();
         });
 
+        Elements.summarizeMessagesBtn.addEventListener("click", async () => {
+            if (!this.globals?.model.apiKey) {
+                alert('You need to enter an API Key');
+                return;
+            }
+            
+            this.currentChat?.summarizeHistory(this.globals.model);
+        });
+        
+
         Elements.selectedChat.addEventListener("change", async (e) => {
             this.chatSelected(e);
         });

@@ -51,6 +51,10 @@ export class Elements {
         return this.byId("clearMessages");
     }
     
+    static get summarizeMessagesBtn(){
+        return this.byId("summarizeMessages");
+    }
+    
     static get settingsToggleBtn(){
         return this.byId("settingsToggle");
     }
