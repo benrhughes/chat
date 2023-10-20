@@ -5,6 +5,7 @@ export class DB {
 
 export class GlobalModel {
     apiKey: string = '';
+    apiUrl = 'https://api.openai.com/v1/chat/completions';
 }
 
 export class ChatModel {
@@ -23,7 +24,7 @@ export class ChatModel {
     }
 }
 
-export type Role ='assistant' | 'user'; 
+export type Role ='assistant' | 'user' | 'system'; 
 
 export class ChatMessage {
     role: Role;
