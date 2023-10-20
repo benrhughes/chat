@@ -105,7 +105,6 @@ export class ChatVm{
     }
 
     clearMessages() {
-        confirm("Delete all messages for this chat?")
         this.model.messages = [];
         this.updateUiFromModel();
     }
@@ -116,7 +115,7 @@ export class ChatVm{
     }
     
     async summarizeHistory(global: GlobalModel){
-        const toSummarize = this.model.messages.slice(0, this.model.messages.length - this.model.contextWindow);
+        const toSummarize = this.model.messages.slice(0, this.model.messages.length - this.model.contextWindow + 1); // +1 so the summary will be included in the context window
         const json = JSON.stringify(toSummarize);
         const msg = {
             role: 'user',
@@ -139,7 +138,7 @@ export class ChatVm{
         if (response.ok) {
             const data = await response.json();
             const assistantMessage = data.choices[0]?.message.content ?? 'No output';
-            console.log(assistantMessage);
+            this.model.messages = [new ChatMessage('assistant', assistantMessage), ...this.model.messages.slice(toSummarize.length)];
         }
     }
 }

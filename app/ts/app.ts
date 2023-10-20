@@ -139,7 +139,7 @@ export class App {
     }
 
     deleteChat() {
-        confirm("Delete the current chat?");
+        if(!confirm("Delete the current chat?")) { return; }
         this.db.models = this.db.models.filter(x => x.id !== this.currentChat?.model.id);
         this.currentChat = new ChatVm(this.db.models[0]);
         this.saveDb();
@@ -170,50 +170,72 @@ export class App {
         this.saveDb();
         alert("Settings saved");
     }
-
+    
+    // clone and replace the element to remove any event handlers
+    unbind(element: HTMLElement){
+        var clone = element.cloneNode(true);
+        element.parentNode?.replaceChild(clone, element);
+    }
+    
     bindUiEventHandlers() {
+        this.unbind(Elements.saveSettingsBtn);
         Elements.saveSettingsBtn.addEventListener("click", async () => {
             this.saveSettings();
         });
 
+        this.unbind(Elements.exportBtn);
         Elements.exportBtn.addEventListener("click", async () => {
             this.export();
         });
 
+        this.unbind(Elements.importBtn);
         Elements.importBtn.addEventListener("click", async () => {
             this.import();
         });
 
+        this.unbind(Elements.clearPersistanceBtn);
         Elements.clearPersistanceBtn.addEventListener("click", async () => {
             this.clearDb();
         });
 
-        Elements.deleteChatBtn.addEventListener("click", () => {
+        this.unbind(Elements.deleteChatBtn);
+        Elements.deleteChatBtn.addEventListener("click", e => {
             this.deleteChat();
         });
 
-        Elements.clearMessagesBtn.addEventListener("click", async () => {
+        this.unbind(Elements.clearMessagesBtn);
+        Elements.clearMessagesBtn.addEventListener("click", async e => {
+            if(!confirm("Delete all messages for this chat?")){ return; }
             this.currentChat?.clearMessages();
         });
 
-        Elements.summarizeMessagesBtn.addEventListener("click", async () => {
+        this.unbind(Elements.summarizeMessagesBtn);
+        Elements.summarizeMessagesBtn.addEventListener("click", async e => {
+            if(!confirm('This will replace your older chat messages with a summary of the conversation. Are you sure?')){
+                return;
+            }
+            
             if (!this.globals?.model.apiKey) {
                 alert('You need to enter an API Key');
                 return;
             }
             
-            this.currentChat?.summarizeHistory(this.globals.model);
+            await this.currentChat?.summarizeHistory(this.globals.model);
+            this.saveDb();
+            this.load();
         });
         
-
+        this.unbind(Elements.selectedChat);
         Elements.selectedChat.addEventListener("change", async (e) => {
             this.chatSelected(e);
         });
 
+        this.unbind(Elements.settingsToggleBtn);
         Elements.settingsToggleBtn.addEventListener("click", async e => {
             return this.toggleSettings(e);
         });
 
+        this.unbind(Elements.prompt);
         Elements.prompt.addEventListener("keydown", async (event) => {
             this.promptEnter(event);
         });
