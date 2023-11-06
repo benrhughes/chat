@@ -5,7 +5,7 @@ export class DB {
 
 export class GlobalModel {
     apiKey: string = '';
-    apiUrl = 'https://api.openai.com/v1/chat/completions';
+    public static apiUrl = 'https://api.openai.com/v1/chat/completions';
 }
 
 export class ChatModel {

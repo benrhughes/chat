@@ -14,7 +14,7 @@ export class ChatVm{
 
         const tmpMsg = this.addMessageToUi(new ChatMessage("assistant", "..."));
 
-        const response = await fetch(global.apiUrl, {
+        const response = await fetch(GlobalModel.apiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -113,14 +113,15 @@ export class ChatVm{
     }
     
     async summarizeHistory(global: GlobalModel){
-        const toSummarize = this.model.messages.slice(0, this.model.messages.length - this.model.contextWindow + 1); // +1 so the summary will be included in the context window
-        const json = JSON.stringify(toSummarize);
+        const json = JSON.stringify(this.model.messages);
         const msg = new ChatMessage(
             'user', 
             `As concisely as possible, summarize this conversation between a user and chatgpt. It will be used as context for future chats.\r\n${json}`
         );
         
-        const response = await fetch(global.apiUrl, {
+        const tmpMsg = this.addMessageToUi(new ChatMessage("assistant", "..."));
+
+        const response = await fetch(GlobalModel.apiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -133,10 +134,12 @@ export class ChatVm{
             })
         });
 
+        tmpMsg?.parentElement?.removeChild(tmpMsg);
+
         if (response.ok) {
             const data = await response.json();
             const assistantMessage = data.choices[0]?.message.content ?? 'No output';
-            this.model.messages = [new ChatMessage('assistant', assistantMessage), ...this.model.messages.slice(toSummarize.length)];
+            this.model.messages = [new ChatMessage('assistant', `Here is a summary of the conversation to date:\n ${assistantMessage}`)];
         } else {
             const text = `An error occurred calling the ChatGPT API.\n${response.status}: ${response.statusText}\n${response.body}`;
             console.error(text);

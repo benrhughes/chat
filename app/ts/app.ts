@@ -211,7 +211,7 @@ export class App {
 
         this.unbind(Elements.summarizeMessagesBtn);
         Elements.summarizeMessagesBtn.addEventListener("click", async e => {
-            if(!confirm('This will replace your older chat messages with a summary of the conversation. Are you sure?')){
+            if(!confirm('This will replace all of your chat history with a summary of the conversation. Are you sure?')){
                 return;
             }
             
