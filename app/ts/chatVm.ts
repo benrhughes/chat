@@ -14,7 +14,7 @@ export class ChatVm{
 
         const tmpMsg = this.addMessageToUi(new ChatMessage("assistant", "..."));
 
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        const response = await fetch(GlobalModel.apiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -23,22 +23,21 @@ export class ChatVm{
             body: JSON.stringify({
                 model: this.model.gptModel,
                 temperature: this.model.temperature,
-                messages: [{ role: 'system', content: this.model.systemPrompt }, ...this.model.messages.slice(-this.model.contextWindow)] 
+                messages: [new ChatMessage('system', this.model.systemPrompt), ...this.model.messages.slice(-this.model.contextWindow)] 
             })
         });
 
+        tmpMsg?.parentElement?.removeChild(tmpMsg);
+        
         if (response.ok) {
             const data = await response.json();
             const assistantMessage = data.choices[0]?.message.content ?? 'No output';
-
-            tmpMsg?.parentElement?.removeChild(tmpMsg);
             message = new ChatMessage('assistant', assistantMessage);
             this.updateHistory(message);
         } else {
             const text = `An error occurred calling the ChatGPT API.\n${response.status}: ${response.statusText}\n${response.body}`;
             console.error(text);
-            message = new ChatMessage('assistant', text);
-            this.addMessageToUi(message);
+            alert(text);
         }
     }
 
@@ -79,7 +78,6 @@ export class ChatVm{
             classes.push('surface-700');
         }
 
-        // historyItem.setAttribute('style', 'max-width: 90%;');
         historyItem.classList.add(...classes);
 
         const content = document.createElement('div');
@@ -104,9 +102,7 @@ export class ChatVm{
         }
     }
 
-
     clearMessages() {
-        confirm("Delete all messages for this chat?")
         this.model.messages = [];
         this.updateUiFromModel();
     }
@@ -114,5 +110,40 @@ export class ChatVm{
     updateHistory(message: ChatMessage) {
         this.model.messages.push(message);
         this.addMessageToUi(message);
+    }
+    
+    async summarizeHistory(global: GlobalModel){
+        const json = JSON.stringify(this.model.messages);
+        const msg = new ChatMessage(
+            'user', 
+            `As concisely as possible, summarize this conversation between a user and chatgpt. It will be used as context for future chats.\r\n${json}`
+        );
+        
+        const tmpMsg = this.addMessageToUi(new ChatMessage("assistant", "..."));
+
+        const response = await fetch(GlobalModel.apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${global.apiKey}`
+            },
+            body: JSON.stringify({
+                model: this.model.gptModel,
+                temperature: this.model.temperature,
+                messages: [msg]
+            })
+        });
+
+        tmpMsg?.parentElement?.removeChild(tmpMsg);
+
+        if (response.ok) {
+            const data = await response.json();
+            const assistantMessage = data.choices[0]?.message.content ?? 'No output';
+            this.model.messages = [new ChatMessage('assistant', `Here is a summary of the conversation to date:\n ${assistantMessage}`)];
+        } else {
+            const text = `An error occurred calling the ChatGPT API.\n${response.status}: ${response.statusText}\n${response.body}`;
+            console.error(text);
+            alert(text);
+        }
     }
 }

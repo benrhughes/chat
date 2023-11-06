@@ -23,7 +23,7 @@ async function execute() {
     }
 
     // compile typescript 
-    await exec("./node_modules/typescript/bin/tsc");
+     await exec(`"${path.join(__dirname, 'node_modules', '.bin', 'tsc')}"`);
 
     // copy resources to destination 
     for (const file of resources) {
