@@ -1,7 +1,7 @@
-import { ChatVm } from "./chatVm.js";
-import { Elements } from "./elements.js";
-import { GlobalsVm } from "./globalsVm.js";
-import { ChatModel, DB, DB as Database } from "./models.js";
+import { ChatVm } from "./chatVm";
+import { Elements } from "./elements";
+import { GlobalsVm } from "./globalsVm";
+import { ChatModel, DB, DB as Database } from "./models";
 
 export class App {
     localStorageKey = "chat-db";

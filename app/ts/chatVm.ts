@@ -1,5 +1,6 @@
-import { Elements } from './elements.js';
-import { ChatMessage, ChatModel, GlobalModel } from './models.js';
+import { marked } from 'marked';
+import { Elements } from './elements';
+import { ChatMessage, ChatModel, GlobalModel } from './models';
 
 export class ChatVm{
     constructor(public model: ChatModel) {
@@ -80,8 +81,12 @@ export class ChatVm{
 
         historyItem.classList.add(...classes);
 
-        const content = document.createElement('div');
-        content.innerText = `${message.content}`;
+        const content = document.createElement('div'); 
+        // content.innerText = `${message.content}`;
+
+        const html = marked(message.content || '');
+        content.innerHTML = html;
+
         historyItem.appendChild(content);
 
         if (historyList.firstChild) {

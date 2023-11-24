@@ -1,5 +1,5 @@
-import { Elements } from "./elements.js";
-import { GlobalModel } from "./models.js";
+import { Elements } from "./elements";
+import { GlobalModel } from "./models";
 
 export class GlobalsVm {
     constructor(public model: GlobalModel){
