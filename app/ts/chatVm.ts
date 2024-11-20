@@ -15,6 +15,13 @@ export class ChatVm{
 
         const tmpMsg = this.addMessageToUi(new ChatMessage("assistant", "..."));
 
+        let messages: ChatMessage[]= [];
+        if(this.model.systemPrompt){
+            // only add the system prompt if a value for it has been set 
+            messages.push(new ChatMessage('system', this.model.systemPrompt));
+        }
+        messages = [...messages, ...this.model.messages.slice(-this.model.contextWindow)];
+        
         const response = await fetch(GlobalModel.apiUrl, {
             method: 'POST',
             headers: {
@@ -24,7 +31,7 @@ export class ChatVm{
             body: JSON.stringify({
                 model: this.model.gptModel,
                 temperature: this.model.temperature,
-                messages: [new ChatMessage('system', this.model.systemPrompt), ...this.model.messages.slice(-this.model.contextWindow)] 
+                messages: messages
             })
         });
 
