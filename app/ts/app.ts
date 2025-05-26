@@ -19,16 +19,16 @@ export class App {
         this.globals = new GlobalsVm(this.db.global);
         this.globals.updateUiFromModel();
 
-        for (const chat of this.db.models) {
+        for (const chat of this.db.chats) {
             this.addChatOptionToUi(chat);
         }
 
         let chat;
-        if (this.db.models.length > 0) {
-            chat = this.db.models[0];
+        if (this.db.chats.length > 0) {
+            chat = this.db.chats[0];
         } else {
             chat = new ChatModel();
-            this.db.models.push(chat);
+            this.db.chats.push(chat);
         }
 
         this.currentChat = new ChatVm(chat);
@@ -52,7 +52,7 @@ export class App {
         }
 
         //reverse-chron sort on last saved
-        this.db.models.sort((a, b) => new Date(b.lastSaved!).valueOf() - new Date(a.lastSaved!).valueOf())
+        this.db.chats.sort((a, b) => new Date(b.lastSaved!).valueOf() - new Date(a.lastSaved!).valueOf())
         localStorage.setItem(this.localStorageKey, JSON.stringify(this.db));
     }
 
@@ -77,10 +77,10 @@ export class App {
 
         if (selectedValue.toLocaleLowerCase() === "new") {
             this.currentChat = new ChatVm(new ChatModel());
-            this.db.models.push(this.currentChat.model);
+            this.db.chats.push(this.currentChat.model);
             this.addChatOptionToUi(this.currentChat.model);
         } else {
-            const found = this.db.models.find(x => x.id === +selectedValue);
+            const found = this.db.chats.find(x => x.id === +selectedValue);
             if (!found) {
                 alert(`Model with id ${selectedValue} couldn't be loaded`);
                 return;
@@ -140,8 +140,8 @@ export class App {
 
     deleteChat() {
         if(!confirm("Delete the current chat?")) { return; }
-        this.db.models = this.db.models.filter(x => x.id !== this.currentChat?.model.id);
-        this.currentChat = new ChatVm(this.db.models[0]);
+        this.db.chats = this.db.chats.filter(x => x.id !== this.currentChat?.model.id);
+        this.currentChat = new ChatVm(this.db.chats[0]);
         this.saveDb();
     }
 

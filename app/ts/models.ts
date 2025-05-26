@@ -1,5 +1,5 @@
 export class DB {
-    models: ChatModel[] = [];
+    chats: ChatModel[] = [];
     global: GlobalModel = new GlobalModel();
 }
 
@@ -12,7 +12,7 @@ export class ChatModel {
     id: number;
     name: string ;
     messages: ChatMessage[] = [];
-    gptModel: string = "gpt-3.5-turbo";
+    gptModel: string = "gpt-4.1";
     systemPrompt: string = "You are a helpful assistant";
     lastSaved: Date | undefined;
     contextWindow: number = 10;
@@ -24,7 +24,7 @@ export class ChatModel {
     }
 }
 
-export type Role ='assistant' | 'user' | 'system'; 
+export type Role ='assistant' | 'user' | 'system' | 'developer'; 
 
 export class ChatMessage {
     role: Role;

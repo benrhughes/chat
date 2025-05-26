@@ -16,9 +16,10 @@ export class ChatVm{
         const tmpMsg = this.addMessageToUi(new ChatMessage("assistant", "..."));
 
         let messages: ChatMessage[]= [];
+        
         if(this.model.systemPrompt){
             // only add the system prompt if a value for it has been set 
-            messages.push(new ChatMessage('system', this.model.systemPrompt));
+            messages.push(new ChatMessage("developer", this.model.systemPrompt));
         }
         messages = [...messages, ...this.model.messages.slice(-this.model.contextWindow)];
         
